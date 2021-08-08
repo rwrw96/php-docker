@@ -2,6 +2,8 @@
 require('dbconnect.php'); 
 session_start();
 
+$error['name'] = [];
+$error['email'] = [];
 
 if(!empty($_POST)){
 	if(empty($_POST['name'])){
@@ -41,12 +43,12 @@ if(!empty($_POST)){
 		<?php if($error['name'] == "blank"): ?>
 			<p>nameが未入力です</p>
 		<?php endif; ?>	
-		<input type="text" name="name">
+		<input type="text" name="name" value="<?php echo $_POST['name']; ?>">
 		<p>email</p>
 		<?php if($error['email'] == "blank"): ?>
 			<p>emailが未入力です</p>
 		<?php endif; ?>	
-		<input type="text" name="email">
+		<input type="text" name="email"  value="<?php echo $_POST['email']; ?>">
 		<button type="submit">登録</button>
 	</form>
 </body>
