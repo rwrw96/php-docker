@@ -3,24 +3,22 @@ require('dbconnect.php');
 session_start();
 
 
-$error['email'] = '';
-
-if(!empty($_POST)){
+if(!empty($_POST['email'])){
 	$stmt = $db -> prepare('SELECT * FROM users WHERE email=?');
 	$stmt -> execute(array($_POST['email']));
 	$login_user = $stmt -> fetch();
 
-	if(empty($_POST['email'])){
-		$error['email'] = 'blank';
-	}
-
-	if($error['email'] === ''){
+	$users = $db -> query('SELECT * FROM users');
+	$users -> execute();
+	
+	foreach($users as $user){
+		if($user['email'] === $_POST['email']){
 			$_SESSION['id'] = $login_user['id'];
-			$_SESSION['error'] = $error; 
 			header('Location: index.php');
 			exit();
-		} 
-	}
+		}		
+	}	
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,12 +31,6 @@ if(!empty($_POST)){
 <body>
   <form action="" method="post">
 		<p>email</p>
-		<?php if($error['email'] == 'blank'): ?>
-			<p>入力してください</p>
-		<?php endif; ?>
-		<?php if($error['email'] == 'nothing'): ?>
-			<p>知らないメールアドレスです</p>
-		<?php endif; ?>
 		<input type="text" name="email">
 		<button type="submit">ログイン</button>
 	</form>

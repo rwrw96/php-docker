@@ -2,7 +2,18 @@
 require('dbconnect.php');
 session_start();
 
-echo $_SESSION['id'];
+
+if(!empty($_POST['content'])){
+	$stmt = $db -> prepare('INSERT INTO lists SET content=?, created_at=NOW()');
+	$stmt -> execute(array($_POST['content']));
+
+	header('Location: index.php');
+	exit();
+}
+
+$lists = $db -> query('SELECT * FROM lists');
+$lists -> execute();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,6 +24,19 @@ echo $_SESSION['id'];
     <title>Document</title>
 </head>
 <body>
-  <a href="logout.php">ログアウトする</a>
+<?php echo "id：" . $_SESSION['id']; ?>
+<a href="logout.php">ログアウトする</a>
+
+
+	<form action="" method="post">
+		<input type="text" name="content">
+		<button type="submit">todo追加</button>
+	</form>
+
+	<?php foreach($lists as $list): ?>
+		<p><?php echo $list['content']; ?></p>
+		<a href="delete.php?id=<?php echo $list['id']; ?>">削除</a>
+		<hr>
+	<?php endforeach; ?>
 </body>
 </html>
