@@ -1,0 +1,17 @@
+services:
+  web:
+    build: ./
+    image: my_php2
+    container_name: php3
+    ports:
+      - "8130:80"
+    volumes:
+      - ./:/var/www/html      
+    restart: always
+
+  mysql:
+    image: mysql
+    container_name: mysql_test3
+    restart: always
+        
+  
