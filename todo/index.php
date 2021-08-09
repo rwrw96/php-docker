@@ -11,8 +11,13 @@ if(!empty($_POST['content'])){
 	exit();
 }
 
-$lists = $db -> query('SELECT * FROM lists');
+$lists = $db -> prepare('SELECT * FROM lists WHERE content=?');
+$lists -> bindValue(1,'test');
 $lists -> execute();
+$list_content = $lists -> fetchAll();
+// // echo $lists;
+// // var_dump($lists);
+var_dump($list_content);
 
 ?>
 <!DOCTYPE html>
