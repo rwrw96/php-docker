@@ -21,8 +21,30 @@ echo $date->format('Ymd');
 echo '<p style="color:red;font-size:30px">pタグ</p>';
 
 function h($str) {
-    return htmlspecialchars($str, ENT_QUOTES|ENT_HTML5, "UTF-8");
+    return htmlspecialchars($str, ENT_QUOTES);
     }
   // HTMLに出力する際
     echo h('<script>alert("スクリプト");</script>');
+?>
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <form action="post.php" method="post">
+            <input type="checkbox" name="lang[]" id="php" value="php">
+            <label for="php">PHP</label>
+            <input type="checkbox" name="lang[]" id="java" value="java">
+            <label for="java">java</label>
+            <input type="checkbox" name="lang[]" id="ruby" value="ruby">
+            <label for="ruby">ruby</label>
+            <input type="submit" value="送信">
+        </form>
+    </body>
+    </html>
 
