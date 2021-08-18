@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MathController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,3 +25,5 @@ Route::get('/archives/', function(){
 Route::get('/archives/{category}/', function($category){
     return view('archives/category', ['category' => $category]);
 });
+
+Route::get('/{x}/{y}', 'App\Http\Controllers\MathController@sum');
